@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\QuizController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -52,3 +54,7 @@ Route::put('/put', function () {
 Route::delete('/delete', function () {
     return response()->json(['message' => 'წარმატებით წაიშალა']);
 });
+
+Route::get('/quizzes', [QuizController::class, 'index']);
+
+Route::post('/subscribe', [QuizController::class, 'subscribe']);
