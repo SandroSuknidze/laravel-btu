@@ -24,6 +24,15 @@
     @endforeach
 </div>
 
+<div>
+    @foreach (App\Models\Quiz::all() as $quiz)
+        <div>
+            <h2>{{ $quiz->name }}</h2>
+            <p>{{ $quiz->description }}</p>
+        </div>
+    @endforeach
+</div>
+
 <footer class="mt-5">
     <form action="/subscribe" method="POST" class="form-inline justify-content-center">
         @csrf
