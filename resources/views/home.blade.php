@@ -24,14 +24,25 @@
     @endforeach
 </div>
 
-<div>
-    @foreach (App\Models\Quiz::all() as $quiz)
-        <div>
-            <h2>{{ $quiz->name }}</h2>
-            <p>{{ $quiz->description }}</p>
-        </div>
+
+<a href="{{ route('quiz.edit') }}">Add New Quiz</a>
+<ul>
+    @foreach($quizzes as $quiz)
+        <li>
+            {{ $quiz->name }}
+            <a href="{{ route('quiz.edit', $quiz->id) }}">Edit</a>
+        </li>
     @endforeach
-</div>
+</ul>
+
+{{--<div>--}}
+{{--    @foreach (App\Models\Quiz::all() as $quiz)--}}
+{{--        <div>--}}
+{{--            <h2>{{ $quiz->name }}</h2>--}}
+{{--            <p>{{ $quiz->description }}</p>--}}
+{{--        </div>--}}
+{{--    @endforeach--}}
+{{--</div>--}}
 
 <footer class="mt-5">
     <form action="/subscribe" method="POST" class="form-inline justify-content-center">
