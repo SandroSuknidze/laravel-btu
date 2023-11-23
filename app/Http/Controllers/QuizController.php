@@ -14,7 +14,22 @@ class QuizController extends Controller
             ['name' => 'Quiz 2', 'photo' => 'storage/photo.jpg', 'status' => 'pending'],
         ];
 
-        $quizzes = Quiz::all();
+        $quizzes = Quiz::whereNotNull('photo')
+            ->where('active', true)
+            ->orderBy('created_at', 'desc')
+            ->limit(8)
+            ->get();
+
+        if ($quizzes->count() < 8) {
+            $additionalQuizzes = Quiz::whereNotNull('description')
+                ->whereNotIn('id', $quizzes->pluck('id'))
+                ->where('active', true)
+                ->orderBy('created_at', 'desc')
+                ->limit(8 - $quizzes->count())
+                ->get();
+
+            $quizzes = $quizzes->merge($additionalQuizzes);
+        }
 
 
         return view('home', ['quizzes' => $quizzes]);
