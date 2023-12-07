@@ -19,8 +19,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/name', function () {
-    return 'Sandro';
+Route::middleware('custom')->group(function () {
+    Route::get('/name', function () {
+        return 'Sandro';
+    });
 });
 
 Route::get('/surname', function () {
