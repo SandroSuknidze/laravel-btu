@@ -60,5 +60,9 @@ Route::delete('/delete', function () {
 Route::get('/quizzes', [QuizController::class, 'index']);
 Route::get('/quiz/{id?}', [QuizController::class, 'edit'])->name('quiz.edit');
 Route::post('/quiz/{id?}', [QuizController::class, 'store']);
+Route::get('/quizzing/{id}', [QuizController::class, 'quizzing'])->name('quiz.start');
+Route::get('/quiz-view/{id}', [QuizController::class, 'show'])->name('quiz.view');
+
+Route::post('/check-answer', [QuizController::class, 'checkAnswer']);
 
 Route::post('/subscribe', [QuizController::class, 'subscribe']);

@@ -1,13 +1,6 @@
 @extends('layouts.app')
 
 
-@push('styles')
-    <link rel="stylesheet" href="/css/custom-home.css">
-@endpush
-
-@push('scripts')
-    <script src="/js/custom-home.js"></script>
-@endpush
 
 @section('content')
 <div class="row">
@@ -17,7 +10,8 @@
                 <img src="{{ asset($quiz['photo']) }}" alt="{{ $quiz['name'] }}" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title">{{ $quiz['name'] }}</h5>
-                    <p class="card-text">Status: {{ ucfirst($quiz['active']) }}</p>
+                    <p class="card-text">Status: {{ ucfirst($quiz['active']) }}
+                    <a href="{{ route('quiz.view', $quiz->id) }}">View Quiz</a>
                 </div>
             </div>
         </div>

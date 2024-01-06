@@ -15,13 +15,14 @@ class QuizFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'name' => fake()->name(),
-            'description' => fake()->optional()->text(),
-            'photo' => fake()->optional()->imageUrl(),
+            'description' => fake()->text(),
+            'photo' => fake()->imageUrl(),
             'active' => fake()->boolean(),
+            'author' => fake()->name(),
         ];
     }
 }
