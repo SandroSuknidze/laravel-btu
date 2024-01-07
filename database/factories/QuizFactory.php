@@ -21,7 +21,7 @@ class QuizFactory extends Factory
             'name' => fake()->name(),
             'description' => fake()->text(),
             'photo' => fake()->imageUrl(),
-            'active' => fake()->boolean(),
+            'status' => 'approved',
             'author' => fake()->name(),
         ];
     }

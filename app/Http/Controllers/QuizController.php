@@ -15,7 +15,7 @@ class QuizController extends Controller
     {
 
         $quizzes = Quiz::whereNotNull('photo')
-//            ->where('active', true)
+            ->where('status', 'approved')
             ->orderBy('created_at', 'desc')
 //            ->limit(8)
             ->get();
@@ -64,10 +64,10 @@ class QuizController extends Controller
 
     public function quizzing($id)
     {
-        $questions = Question::where('quiz_id', $id)->get();
-
-        return view('question', compact('questions'));
+        $quiz = Quiz::with('questions')->findOrFail($id);
+        return view('question', compact('quiz'));
     }
+
 
     public function checkAnswer(Request $request)
     {
@@ -75,6 +75,7 @@ class QuizController extends Controller
             'question_id' => 'required|exists:questions,id',
             'answer' => 'required',
         ]);
+
 
         $question = Question::find($data['question_id']);
         $isCorrect = $question && $question->correct_answer == $data['answer'];

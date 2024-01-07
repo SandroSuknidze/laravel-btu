@@ -6,11 +6,11 @@
 <div class="row">
     @foreach($quizzes as $quiz)
         <div class="col-md-4 mb-4">
-            <div class="card s {{ $quiz['active'] == 'completed' ? 'border-success' : 'border-warning' }}">
+            <div class="card s {{ $quiz['status'] == 'approved' ? 'border-success' : 'border-warning' }}">
                 <img src="{{ asset($quiz['photo']) }}" alt="{{ $quiz['name'] }}" class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title">{{ $quiz['name'] }}</h5>
-                    <p class="card-text">Status: {{ ucfirst($quiz['active']) }}
+                    <p class="card-text">Status: {{ ucfirst($quiz['status']) }}
                     <a href="{{ route('quiz.view', $quiz->id) }}">View Quiz</a>
                 </div>
             </div>

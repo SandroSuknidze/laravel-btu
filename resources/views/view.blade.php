@@ -10,7 +10,7 @@
                     <div class="card-body">
                         <h3 class="card-title">{{ $quiz['name'] }}</h3>
                         <p class="card-text">
-                            <strong>Status:</strong> {{ $quiz['active'] ? 'Active' : 'Inactive' }}
+                            <strong>Status:</strong> {{ $quiz['status'] }}
                         </p>
                         <p class="card-text">
                             <strong>Description:</strong> {{ $quiz['description'] }}

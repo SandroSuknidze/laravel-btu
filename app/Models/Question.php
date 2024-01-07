@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Question extends Model
 {
@@ -12,8 +12,8 @@ class Question extends Model
 
     protected $fillable = ['quiz_id', 'question_text', 'correct_answer', 'options'];
 
-    public function quiz(): BelongsTo
+    public function quiz(): BelongsToMany
     {
-        return $this->belongsTo(Quiz::class);
+        return $this->belongsToMany(Quiz::class, 'quiz_question');
     }
 }

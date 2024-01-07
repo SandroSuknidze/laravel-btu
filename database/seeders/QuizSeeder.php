@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Question;
 use App\Models\Quiz;
 use Illuminate\Database\Seeder;
 
@@ -21,6 +22,7 @@ class QuizSeeder extends Seeder
 //            ['name' => 'Quiz 4', 'description' => 'Description for quiz 4'],
 //            ['name' => 'Quiz 5', 'description' => 'Description for quiz 5'],
 //        ]);
-
+        // Retrieve or create quizzes and questions
+//        Quiz::factory(30)->create();
     }
 }
