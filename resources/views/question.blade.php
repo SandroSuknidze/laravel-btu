@@ -10,6 +10,7 @@
                         Question {{ $index + 1 }}/{{ $quiz->questions->count() }}
                     </div>
                     <div class="card-body">
+                        <img src="{{ $question->photo }}">
                         <h5 class="card-title">{{ $question->question_text }}</h5>
                         <div class="mt-3">
                             @foreach(json_decode($question->options) as $option)
