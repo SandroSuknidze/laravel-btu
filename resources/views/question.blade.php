@@ -1,6 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
+<x-app-layout>
     <div class="container mt-4">
         <form id="quizForm">
             @csrf
@@ -40,7 +38,6 @@
             Your Final Score:
         </div>
     </div>
-
     <script>
 
         let final = 0;
@@ -101,4 +98,4 @@
     </script>
 
 
-@endsection
+</x-app-layout>

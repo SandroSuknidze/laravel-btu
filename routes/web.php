@@ -19,50 +19,25 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware('custom')->group(function () {
-    Route::get('/name', function () {
-        return 'Sandro';
-    });
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/quizzes', [QuizController::class, 'index'])->name('quizzes');
+    Route::get('/quiz/{id?}', [QuizController::class, 'edit'])->name('quiz.edit');
+    Route::post('/quiz/{id?}', [QuizController::class, 'store']);
+    Route::get('/quizzing/{id}', [QuizController::class, 'quizzing'])->name('quiz.start');
+    Route::get('/quiz-view/{id}', [QuizController::class, 'show'])->name('quiz.view');
 });
 
-Route::get('/surname', function () {
-    return 'Suknidze';
-});
 
-Route::get('/age', function () {
-    return '21';
-});
-
-Route::get('/hobby', function () {
-    return 'Basketball';
-});
-
-Route::get('/skinColor', function () {
-    return 'white';
-});
-
-Route::get('/test', function () {
-    return 'test success';
-});
-
-Route::post('/post', function () {
-    return response()->json(['message' => 'წარმატებით განახლდა']);
-});
-
-Route::put('/put', function () {
-    return response()->json(['message' => 'წარმატებით დაემატა']);
-});
-
-Route::delete('/delete', function () {
-    return response()->json(['message' => 'წარმატებით წაიშალა']);
-});
-
-Route::get('/quizzes', [QuizController::class, 'index']);
-Route::get('/quiz/{id?}', [QuizController::class, 'edit'])->name('quiz.edit');
-Route::post('/quiz/{id?}', [QuizController::class, 'store']);
-Route::get('/quizzing/{id}', [QuizController::class, 'quizzing'])->name('quiz.start');
-Route::get('/quiz-view/{id}', [QuizController::class, 'show'])->name('quiz.view');
 
 Route::post('/check-answer', [QuizController::class, 'checkAnswer']);
 
 Route::post('/subscribe', [QuizController::class, 'subscribe']);
+require __DIR__.'/auth.php';
