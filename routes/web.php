@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/quizzes', [QuizController::class, 'index'])->name('quizzes');
     Route::get('/quiz/{id?}', [QuizController::class, 'edit'])->name('quiz.edit');
     Route::post('/quiz/{id?}', [QuizController::class, 'store']);
+    Route::delete('/quiz/{id}', [QuizController::class, 'delete'])->name('quiz.delete');
     Route::get('/quizzing/{id}', [QuizController::class, 'quizzing'])->name('quiz.start');
     Route::get('/quiz-view/{id}', [QuizController::class, 'show'])->name('quiz.view');
     Route::get('/my-quizzes', [QuizController::class, 'myQuizzes'])->name('myQuizzes');

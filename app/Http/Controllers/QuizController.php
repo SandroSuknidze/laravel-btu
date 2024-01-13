@@ -7,12 +7,16 @@ use App\Models\Quiz;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class QuizController extends Controller
 {
-    public function index()
+    public function index(): Factory|View|Application
     {
 
         $quizzes = Quiz::whereNotNull('photo')
@@ -61,7 +65,7 @@ class QuizController extends Controller
         return view('edit', compact('quiz'));
     }
 
-    public function store(Request $request, $id = null)
+    public function store(Request $request, $id = null): Redirector|Application|RedirectResponse
     {
         $data = $request->validate([
             'name' => 'required|string',
@@ -92,14 +96,34 @@ class QuizController extends Controller
         return redirect('/quizzes')->with('success', 'Quiz saved successfully!');
     }
 
-    public function quizzing($id)
+    public function delete($id): Redirector|Application|RedirectResponse
+    {
+        $quiz = Quiz::findOrFail($id);
+        if (Auth::id() == $quiz->author_id)
+        {
+            if ($quiz->photo) {
+                $photoPath = 'photos/' . $quiz->photo;
+                if (File::exists($photoPath)) {
+                    File::delete($photoPath);
+                }
+            }
+
+            $quiz->delete();
+
+            return redirect('/my-quizzes')->with('success', 'Quiz deleted successfully.');
+        }
+
+        return redirect('/my-quizzes')->with('error', 'You are not authorized to delete this quiz.');
+    }
+
+    public function quizzing($id): Factory|View|Application
     {
         $quiz = Quiz::with('questions')->findOrFail($id);
         return view('question', compact('quiz'));
     }
 
 
-    public function checkAnswer(Request $request)
+    public function checkAnswer(Request $request): JsonResponse
     {
         $data = $request->validate([
             'question_id' => 'required|exists:questions,id',
@@ -116,7 +140,7 @@ class QuizController extends Controller
 
 
 
-    public function subscribe(Request $request)
+    public function subscribe(): Redirector|Application|RedirectResponse
     {
         return redirect('/quizzes')->with('status', 'Subscribed successfully!');
     }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -21,8 +22,8 @@ class QuizFactory extends Factory
             'name' => fake()->name(),
             'description' => fake()->text(),
             'photo' => '',
+            'author_id' => User::factory(),
             'status' => 'approved',
-            'author' => fake()->name(),
         ];
     }
 }

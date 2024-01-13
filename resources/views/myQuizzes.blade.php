@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div class="flex justify-end mb-4">
-            <a href="{{ route('quiz.edit') }}" class="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded">
+            <a href="{{ route('quiz.edit') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Add New Quiz
             </a>
         </div>
@@ -16,7 +16,14 @@
                             <p class="text-gray-700 mb-2">{{ $quiz->description }}</p>
                             <p class="text-gray-600 text-sm mb-2">Status: {{ $quiz->status }}</p>
                             <p class="text-gray-600 text-sm mb-4">Author: {{ $quiz->user->name }}</p>
-                            <a href="{{ route('quiz.edit', $quiz->id) }}" class="text-blue-500 hover:text-blue-600 font-semibold">Edit</a>
+                            <div class="flex justify-between">
+                                <a href="{{ route('quiz.edit', $quiz->id) }}" class="font-semibold">Edit</a>
+                                <form action="{{ route('quiz.delete', $quiz->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-my_color hover:text-red-900 font-semibold">Delete</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 @endif
