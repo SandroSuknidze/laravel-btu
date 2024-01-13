@@ -24,9 +24,15 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('myQuizzes')" :active="request()->routeIs('myQuizzes')">
-                        {{ __('MyQuizzes') }}
-                    </x-nav-link>
+                    @if(Auth::id() == 1)
+                        <x-nav-link :href="route('pendingQuizzes')" :active="request()->routeIs('pendingQuizzes')">
+                            {{ __('Pending Quizzes') }}
+                        </x-nav-link>
+                    @else
+                        <x-nav-link :href="route('myQuizzes')" :active="request()->routeIs('myQuizzes')">
+                            {{ __('MyQuizzes') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 

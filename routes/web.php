@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/quiz/{id?}', [QuizController::class, 'store']);
     Route::delete('/quiz/{id}', [QuizController::class, 'delete'])->name('quiz.delete');
     Route::get('/quizzing/{id}', [QuizController::class, 'quizzing'])->name('quiz.start');
+    Route::get('/pending-quizzes', [QuizController::class, 'indexAdmin'])->name('pendingQuizzes');
     Route::get('/quiz-view/{id}', [QuizController::class, 'show'])->name('quiz.view');
     Route::get('/my-quizzes', [QuizController::class, 'myQuizzes'])->name('myQuizzes');
 });

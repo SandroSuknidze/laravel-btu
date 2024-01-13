@@ -40,6 +40,13 @@ class QuizController extends Controller
         return view('home', ['quizzes' => $quizzes]);
     }
 
+    public function indexAdmin(): Factory|View|Application
+    {
+        $quizzes = Quiz::where('status', 'pending')->get();
+
+        return view('pendingQuizzes', ['quizzes' => $quizzes]);
+    }
+
     public function show($id): Factory|View|Application
     {
         $quiz = Quiz::findOrFail($id);
@@ -49,16 +56,12 @@ class QuizController extends Controller
 
     public function myQuizzes(): Factory|View|Application
     {
-        if (Auth::id() == 1) {
-            $quizzes = Quiz::all();
-        } else {
-            $quizzes = Quiz::where('author_id', Auth::id())->get();
-        }
+        $quizzes = Quiz::where('author_id', Auth::id())->get();
 
         return view('myQuizzes', compact('quizzes'));
     }
 
-    public function edit($id = null)
+    public function edit($id = null): Factory|View|Application
     {
         $quiz = ($id) ? Quiz::find($id) : new Quiz;
 

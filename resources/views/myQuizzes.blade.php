@@ -5,10 +5,21 @@
                 Add New Quiz
             </a>
         </div>
+        @if(count($quizzes) == 0)
+            <div class="py-12">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <div class="p-6 text-gray-900">
+                            There are no quizzes
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @else
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             @foreach($quizzes as $quiz)
-                @if(Auth::user()->id == 1 || Auth::user()->id == $quiz->author_id)
+                @if(Auth::user()->id == $quiz->author_id)
                     <div class="card bg-white shadow-lg rounded-lg overflow-hidden">
                         <img class="w-full h-48 object-cover object-center" src="{{ asset('photos/' . $quiz->photo) }}" alt="{{ $quiz->name }}">
                         <div class="p-4">
@@ -29,5 +40,6 @@
                 @endif
             @endforeach
         </div>
+        @endif
     </div>
 </x-app-layout>
