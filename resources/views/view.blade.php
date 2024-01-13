@@ -18,6 +18,9 @@
                         <p class="card-text">
                             <strong>Author:</strong> {{ $quiz->user->name }}
                         </p>
+                        <p class="card-text">
+                            <strong>Number of Questions:</strong> {{ $quiz->questions()->count() }}
+                        </p>
                         <a href="{{ route('quiz.start', $quiz->id) }}" style="color: white"><button class="btn btn-primary">Start Quiz</button></a>
                     </div>
                 </div>

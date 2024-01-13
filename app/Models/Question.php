@@ -10,7 +10,7 @@ class Question extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['quiz_id', 'question_text', 'correct_answer', 'options'];
+    protected $fillable = ['quiz_id', 'question_text', 'correct_answer', 'options', 'photo', 'order'];
 
     public function quiz(): BelongsToMany
     {

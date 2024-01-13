@@ -78,23 +78,64 @@ class QuizController extends Controller
         ]);
 
 
-
-
         $quiz = ($id) ? Quiz::find($id) : new Quiz;
 
         $quiz->fill($data);
 
-        if ($quiz->status == '') {
+        if ($quiz->status == '' || Auth::user()->id != 1) {
             $quiz->status = 'pending';
         }
+
         if($request->photo) {
-            $newPhotoName = time() . '-' . $request->name . '.' . $request->photo->extension();
+            $newPhotoName = time() . '-' . preg_replace('/[^A-Za-z0-9\-]/', '', $request->name) . '.' . $request->photo->extension();
             $request->photo->move(public_path('photos'), $newPhotoName);
             $quiz->photo = $newPhotoName;
-
         }
-        $quiz->author_id = Auth::user()->id;
+
+        $quiz->author_id = Auth::user()->id != 1 ? Auth::user()->id : $quiz->author_id;
         $quiz->save();
+
+        if ($request->has('questions')) {
+
+            foreach ($request->input('questions') as $key => $questionData) {
+
+                if ($request->hasFile("questions.$key.question_photo")) {
+                    $file = $request->file("questions.$key.question_photo");
+                    $newPhotoName = time() . '-' . preg_replace('/[^A-Za-z0-9\-]/', '', $questionData['question_text']) . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('photos'), $newPhotoName);
+                    $questionPhotoPath = 'photos/' . $newPhotoName;
+                } else {
+                    $questionPhotoPath = null;
+                }
+
+                if (isset($questionData['id'])) {
+                    $question = Question::find($questionData['id']);
+                    if ($question) {
+                        $question->update([
+                            'question_text' => $questionData['question_text'],
+                            'options' => json_encode(explode(",", $questionData['options'])),
+                            'correct_answer' => $questionData['correct_answer'],
+                            'order' => $questionData['order'],
+                            'quiz_id' => $id,
+                        ]);
+
+                        if($questionPhotoPath) {
+                            $question->photo = $questionPhotoPath;
+                            $question->save();
+                        }
+                    }
+                } else {
+                    $quiz->questions()->create([
+                        'question_text' => $questionData['question_text'],
+                        'options' => json_encode(explode(",",$questionData['options'])),
+                        'correct_answer' => $questionData['correct_answer'],
+                        'quiz_id' => $id,
+                        'order' => $questionData['order'],
+                        'photo' => $questionPhotoPath
+                    ]);
+                }
+            }
+        }
 
         return redirect('/quizzes')->with('success', 'Quiz saved successfully!');
     }

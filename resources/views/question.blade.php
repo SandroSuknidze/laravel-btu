@@ -2,13 +2,13 @@
     <div class="container mt-4">
         <form id="quizForm">
             @csrf
-            @foreach($quiz->questions as $index => $question)
+            @foreach($quiz->questions()->orderBy('order')->get() as $index => $question)
                 <div class="card mb-3 question-card" id="question_card_{{ $index }}" data-index="{{ $index }}" style="{{ $index > 0 ? 'display:none;' : '' }}">
                     <div class="card-header">
                         Question {{ $index + 1 }}/{{ $quiz->questions->count() }}
                     </div>
                     <div class="card-body">
-                        <img src="{{ $question->photo }}">
+                        <img src="{{ asset($question->photo) }}">
                         <h5 class="card-title">{{ $question->question_text }}</h5>
                         <div class="mt-3">
                             @foreach(json_decode($question->options) as $option)
