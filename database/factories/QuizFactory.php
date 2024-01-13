@@ -20,7 +20,7 @@ class QuizFactory extends Factory
         return [
             'name' => fake()->name(),
             'description' => fake()->text(),
-            'photo' => fake()->imageUrl(),
+            'photo' => '',
             'status' => 'approved',
             'author' => fake()->name(),
         ];

@@ -8,6 +8,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
 {
@@ -42,9 +43,21 @@ class QuizController extends Controller
         return view('view', compact('quiz'));
     }
 
+    public function myQuizzes(): Factory|View|Application
+    {
+        if (Auth::id() == 1) {
+            $quizzes = Quiz::all();
+        } else {
+            $quizzes = Quiz::where('author_id', Auth::id())->get();
+        }
+
+        return view('myQuizzes', compact('quizzes'));
+    }
+
     public function edit($id = null)
     {
         $quiz = ($id) ? Quiz::find($id) : new Quiz;
+
         return view('edit', compact('quiz'));
     }
 
@@ -53,10 +66,27 @@ class QuizController extends Controller
         $data = $request->validate([
             'name' => 'required|string',
             'description' => 'required|string',
+            'photo' => 'mimes:jpg,png,jpeg,webp|max:5048',
+            'status' => ''
         ]);
 
+
+
+
         $quiz = ($id) ? Quiz::find($id) : new Quiz;
+
         $quiz->fill($data);
+
+        if ($quiz->status == '') {
+            $quiz->status = 'pending';
+        }
+        if($request->photo) {
+            $newPhotoName = time() . '-' . $request->name . '.' . $request->photo->extension();
+            $request->photo->move(public_path('photos'), $newPhotoName);
+            $quiz->photo = $newPhotoName;
+
+        }
+        $quiz->author_id = Auth::user()->id;
         $quiz->save();
 
         return redirect('/quizzes')->with('success', 'Quiz saved successfully!');

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->text('photo');
-            $table->string('author');
+            $table->foreignId('author_id')->constrained('users')->cascadeOnDelete();
             $table->string('status')->default('approved');
             $table->timestamps();
         });

@@ -28,7 +28,7 @@ class QuestionFactory extends Factory
 
         return [
             'quiz_id' => Quiz::factory(),
-            'photo' => fake()->imageUrl(),
+            'photo' => '',
             'question_text' => fake()->sentence,
             'correct_answer' => $correctAnswer,
             'options' => json_encode($options),

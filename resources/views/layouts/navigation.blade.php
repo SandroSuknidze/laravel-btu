@@ -22,6 +22,12 @@
                         {{ __('Quizzes') }}
                     </x-nav-link>
                 </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('myQuizzes')" :active="request()->routeIs('myQuizzes')">
+                        {{ __('MyQuizzes') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

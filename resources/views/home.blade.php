@@ -4,7 +4,7 @@
         @foreach($quizzes as $quiz)
             <div class="col-md-4 mb-4">
                 <div class="card s {{ $quiz['status'] == 'approved' ? 'border-success' : 'border-warning' }}">
-                    <img src="{{ asset($quiz['photo']) }}" alt="{{ $quiz['name'] }}" class="card-img-top">
+                    <img src="{{ asset($quiz->photo ? 'photos/' . $quiz->photo : 'photos/default-image.jpg') }}" alt="{{ $quiz->name }}" class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title">{{ $quiz['name'] }}</h5>
                         <p class="card-text">Status: {{ ucfirst($quiz['status']) }}
@@ -16,15 +16,7 @@
     </div>
 
 
-    <a href="{{ route('quiz.edit') }}">Add New Quiz</a>
-    <ul>
-        @foreach($quizzes as $quiz)
-            <li>
-                {{ $quiz->name }}
-                <a href="{{ route('quiz.edit', $quiz->id) }}">Edit</a>
-            </li>
-        @endforeach
-    </ul>
+
 
 
     <footer class="mt-5">

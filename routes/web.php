@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/quiz/{id?}', [QuizController::class, 'store']);
     Route::get('/quizzing/{id}', [QuizController::class, 'quizzing'])->name('quiz.start');
     Route::get('/quiz-view/{id}', [QuizController::class, 'show'])->name('quiz.view');
+    Route::get('/my-quizzes', [QuizController::class, 'myQuizzes'])->name('myQuizzes');
 });
 
 
