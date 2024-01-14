@@ -1,12 +1,12 @@
 @if(Auth::user()->id == 1)
     <x-app-layout>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-            <div class="flex justify-end mb-4">
-                <a href="{{ route('quiz.edit') }}"
-                   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Add New Quiz
-                </a>
-            </div>
+{{--            <div class="flex justify-end mb-4">--}}
+{{--                <a href="{{ route('quiz.edit') }}"--}}
+{{--                   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">--}}
+{{--                    Add New Quiz--}}
+{{--                </a>--}}
+{{--            </div>--}}
             @if(count($quizzes) == 0)
                 <div class="py-12">
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
