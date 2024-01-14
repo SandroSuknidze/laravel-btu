@@ -143,7 +143,7 @@ class QuizController extends Controller
     public function delete($id): Redirector|Application|RedirectResponse
     {
         $quiz = Quiz::findOrFail($id);
-        if (Auth::id() == $quiz->author_id)
+        if (Auth::id() == $quiz->author_id || Auth::id() == 1)
         {
             if ($quiz->photo) {
                 $photoPath = 'photos/' . $quiz->photo;
@@ -153,7 +153,9 @@ class QuizController extends Controller
             }
 
             $quiz->delete();
-
+            if (Auth::id() == 1) {
+                return redirect('/pending-quizzes')->with('success', 'Quiz deleted successfully.');
+            }
             return redirect('/my-quizzes')->with('success', 'Quiz deleted successfully.');
         }
 
